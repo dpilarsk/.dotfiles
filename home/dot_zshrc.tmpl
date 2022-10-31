@@ -34,6 +34,12 @@ alias pnx="pnpm nx"
 alias vim="nvim"
 alias vi="nvim"
 
+alias ls_old="/bin/ls"
+alias cat_old="/bin/cat"
+
+alias cat="bat"
+alias ls="exa"
+
 export SHADOW_NPM_REGISTRY_TOKEN={{ (onepasswordDetailsFields "Shadow Registry Token" .professional.accounts.op.vault).credential.value | quote}}
 
 alias ffr="filebot -rename --mode interactive -non-strict --lang fr"
