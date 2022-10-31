@@ -7,7 +7,7 @@ display_action "Begin homebrew installs"
 display_action "Install formulaes"
 {{- range (.os.darwin.homebrew.formulaes | uniq) }}
   display_action "Install {{ . }}"
-  brew {{ . }}
+  brew install {{ . }}
 {{- end }}
 
 display_action "Install casks"
@@ -20,5 +20,5 @@ display_action "Install casks"
 display_action "Install AppStore apps"
 {{- range (.os.darwin.mas | uniq) }}
   display_action "Install {{ .name }}"
-  mas '{{ .name }}', id: {{ .id }}
+  mas install {{ .id }}
 {{- end }}

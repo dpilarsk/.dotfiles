@@ -1,0 +1,151 @@
+#!/usr/bin/env bash
+
+# Install remotely from single shell command
+# Usage : sh -c "$(curl -fsSL https://raw.githubusercontent.com/dpilarsk/.dotfiles/main/install.sh)" -- -r [user/repo]
+
+# Exit on error
+set -e
+
+REPOSITORY_BASE_URL="https://github.com/"
+REPOSITORY=""
+DEFAULT_REPOSITORY="dpilarsk/.dotfiles"
+
+main() {
+	echo "\e[1m\e[33m🚀 install.sh\e[0m"
+	parse_args "${@}"
+	install_brew
+	load_brew
+	install_xcode
+	install_xcode_cli_tools
+	install_chezmoi
+	bootstrap
+}
+
+# Prints usage
+usage() {
+	cat <<-EOF
+
+		$0 [-r [user/repo]]
+
+		options:
+
+		    -r --remote  For remote installs, use a github repo as source instead of local files.
+							Optionally give a user/repo to override the default ($REPOSITORY)
+		    -h --help    Display this message.
+
+	EOF
+	exit 1
+}
+
+# Displays a message then exits
+die() {
+	echo "$*"
+	exit 1
+}
+
+# Parses script arguments
+parse_args() {
+	argv=()
+	while [ $# -gt 0 ]; do
+		opt=$1
+		shift
+		case ${opt} in
+			-r | --remote)
+				if [ $# -eq 0 -o "${1:0:1}" = "-" ]; then
+					REPOSITORY=$DEFAULT_REPOSITORY
+				else
+					REPOSITORY=$1
+					shift
+				fi
+				;;
+			-h | --help)
+				usage
+				;;
+			*)
+				if [ "${opt:0:1}" = "-" ]; then
+					die "\e[1m\e[31m🛑 ${opt}: unknown option.\e[0m" >&2
+				fi
+				argv+=(${opt})
+				;;
+		esac
+	done
+}
+
+install_brew() {
+	# Check for Homebrew and install if we don't have it
+	if ! command -v brew &>/dev/null ; then
+		if command -v /opt/homebrew/bin/brew &>/dev/null ; then
+			echo "⏭️  Homebrew already installed."
+		else
+			echo "🏭 Installing homebrew..."
+			/usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+		fi
+	fi
+}
+
+load_brew() {
+	echo "🚀 Loading homebrew..."
+	if ! command -v brew &>/dev/null; then
+		eval "$(/opt/homebrew/bin/brew shellenv)"
+	fi
+}
+
+install_xcode() {
+	echo "🏭 Installing Xcode..."
+	brew update
+	brew install mas
+	mas install 497799835
+}
+
+# Checks for Xcode Command Line Tools and install them if not present
+install_xcode_cli_tools() {
+	sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+	xcode-select -p &>/dev/null
+	if [ $? -ne 0 ]; then
+		echo "♻️  Installing Xcode Command Line Tools ..."
+		xcode-select --install
+		sudo xcodebuild -license accept
+	else
+		xcode_version=$(xcodebuild -version | grep '^Xcode\s' | sed -E 's/^Xcode[[:space:]]+([0-9\.]+)/\1/')
+		accepted_license_version=$(defaults read /Library/Preferences/com.apple.dt.Xcode 2>/dev/null | grep IDEXcodeVersionForAgreedToGMLicense | cut -d '"' -f 2)
+		if [ "$xcode_version" != "$accepted_license_version" ]; then
+			sudo xcodebuild -license accept
+		fi
+		echo "✨ XCode Command Line Tools already installed"
+	fi
+}
+
+# Checks for chezmoi and install it if not present
+install_chezmoi() {
+	bin_dir="$HOME/.local/bin"
+	PATH="$bin_dir:$PATH"
+	if [ ! "$(command -v chezmoi)" ]; then
+		echo "♻️  Installing chezmoi ..."
+		CHEZMOI="$bin_dir/chezmoi"
+		if [ "$(command -v curl)" ]; then
+			sh -c "$(curl -fsSL https://git.io/chezmoi)" -- -b "$bin_dir"
+		elif [ "$(command -v wget)" ]; then
+			sh -c "$(wget -qO- https://git.io/chezmoi)" -- -b "$bin_dir"
+		else
+			echo "\e[1m\e[31m🛑 To install chezmoi, you must have curl or wget installed.\e[0m" >&2
+			exit 1
+		fi
+	else
+		echo "✨ chezmoi already installed"
+		CHEZMOI=chezmoi
+	fi
+}
+
+# Replace current process with chezmoi init, and immediately apply changes
+bootstrap() {
+	echo "♻️  Initializing dotfiles ..."
+
+	if [ -z "$REPOSITORY" ]; then
+		args="--source=$script_dir"
+	else
+		args="$REPOSITORY_BASE_URL$REPOSITORY"
+	fi
+	exec "$CHEZMOI" init --apply "$args"
+}
+
+main "${@}"
