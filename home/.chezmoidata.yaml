@@ -31,6 +31,7 @@ os:
         - zsh
         - zsh-completions
         - exa
+        - spaceship
       casks:
         - alfred
         - carbon-copy-cloner
