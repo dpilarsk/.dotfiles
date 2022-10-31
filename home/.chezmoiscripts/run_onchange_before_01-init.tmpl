@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+{{ template "utils.sh" . }}
+
+sudo -v
+
+# Check for Xcode Command Line Tools and install them if not present
+xcode-select -p &>/dev/null
+if [ $? -ne 0 ]; then
+	display_action "Installing Xcode Command Line Tools"
+	xcode-select --install
+else
+	display_bypass_action "XCode Command Line Tools already installed"
+fi
+
+# Accept XCode license
+xcode_version=`xcodebuild -version | grep '^Xcode\s' | sed -E 's/^Xcode[[:space:]]+([0-9\.]+)/\1/'`
+accepted_license_version=`defaults read /Library/Preferences/com.apple.dt.Xcode 2> /dev/null | grep IDEXcodeVersionForAgreedToGMLicense | cut -d '"' -f 2`
+if [ "$xcode_version" != "$accepted_license_version" ]; then
+	sudo xcodebuild -license accept
+fi
+
+display_action "Install Rosetta 2..."
+softwareupdate --install-rosetta --agree-to-license
+
+# Check for Homebrew and install if we don't have it
+
+if ! command -v brew &>/dev/null ; then
+	if command -v /opt/homebrew/bin/brew &>/dev/null ; then
+		display_bypass_action "Homebrew already installed"
+	else
+		display_action "Installing homebrew"
+		/usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	fi
+fi

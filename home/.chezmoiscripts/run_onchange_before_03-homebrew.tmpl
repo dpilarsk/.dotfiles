@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+{{ template "utils.sh" . }}
+
+display_action "Begin homebrew installs"
+
+display_action "Install formulaes"
+{{- range (.os.darwin.homebrew.formulaes | uniq) }}
+  display_action "Install {{ . }}"
+  brew {{ . }}
+{{- end }}
+
+display_action "Install casks"
+{{- range (.os.darwin.homebrew.casks | uniq) }}
+  display_action "Install {{ . }}"
+  brew install --cask {{ . }}
+{{- end }}
+
+
+display_action "Install AppStore apps"
+{{- range (.os.darwin.mas | uniq) }}
+  display_action "Install {{ .name }}"
+  mas '{{ .name }}', id: {{ .id }}
+{{- end }}

@@ -1,0 +1,106 @@
+personal:
+  accounts:
+    op:
+      account: Y6XH7VNDBNBA5HHTPTTUJVFQ3Q
+      vault: hqi3rrimusry3l5qyw43mt4tky
+
+professional:
+  accounts:
+    op:
+      account: Y6XH7VNDBNBA5HHTPTTUJVFQ3Q
+      vault: lf4dmsu54kx6pcmqf7537a3b6q
+
+os:
+  darwin:
+    homebrew:
+      formulaes:
+        - git
+        - git-lfs
+        - wget
+        - node
+        - neovim
+        - tmux
+        - fnm
+        - filebot
+        - k9s
+        - bat
+        - jq
+        - mas
+        - zsh
+        - zsh-completions
+        - exa
+      casks:
+        - alfred
+        - carbon-copy-clone
+        - via
+        - vial
+        - fig
+        - netnewswire
+        - monitorcontrol
+        - rectangle
+        - cleanshot
+        - swish
+        - tower
+        - iterm2
+        - webstorm
+        - jetbrains-toolbox
+        - brave-browser
+        - figma
+        - linear-linear
+        - kaleidoscope
+        - microsoft-remote-desktop
+        - notion
+        - pixelsnap
+        - proxyman
+        - tableplus
+        - visual-studio-code
+        - docker
+        - google-cloud-sdk
+        - slack
+        - signal
+        - telegram
+        - font-fira-code
+        - font-fira-code-nerd-font
+        - iina
+        - transmission
+        - handbrake
+        - zoom
+        - teamviewer
+        - the-unarchiver
+        - google-chrome
+        - discord
+        - 1password
+        - 1password-cli
+        - firefox
+        - aldente
+        - hpedrorodrigues/tools/dockutil
+        - mdimagesizemdimporter
+        - qlmarkdown
+        - qlimagesize
+        - quicklook-json
+        - webpquicklook
+        - private-internet-access
+    mas:
+      - name: "1Password for Safari"
+        id: 1569813296
+      - name: "Xcode"
+        id: 497799835
+    dock_icons:
+        apps:
+          - Finder
+          - Safari
+          - Calendar
+          - Messages
+          - Mail
+          - System Settings
+          - Tower
+          - Signal
+          - iTerm
+          - Slack
+          - Notion
+          - Figma
+        others:
+          - path: ~/Downloads
+            display: stack
+            view: list
+            sort: dateadded

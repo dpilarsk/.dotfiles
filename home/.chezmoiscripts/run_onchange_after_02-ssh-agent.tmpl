@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+{{ template "utils.sh" . }}
+
+display_filename "Setup ssh-agent"
+
+if [[ ! -L ~/.ssh/op-agent.sock ]]; then
+	display_action "Linking 1password ssh agent socket"
+	ln -s ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.ssh/op-agent.sock
+else
+	display_bypass_action "1password ssh agent socket already linked"
+fi

@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+{{ template "utils.sh" . }}
+
+display_filename "Setup default system settings"
+
+display_action "Setup languages & localization"
+defaults write -g AppleLocale -string 'en_US'
+defaults write -g AppleMetricUnits -bool true
+defaults write -g AppleMeasurementUnits -string 'Centimeters'
+defaults write -g AppleTemperatureUnit -string 'Celsius'
+# Languages and text formats
+defaults write -g AppleLanguages -array 'en' 'fr'
+sudo systemsetup -settimezone 'Europe/Paris' >/dev/null
+
+display_action "Setup UI/UX"
+defaults write -g AppleInterfacesStyleSwitchesAutomatically -bool true
+# short repeat keys
+sudo defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+sudo defaults write NSGlobalDomain KeyRepeat -int 1
+# Touch to click even on login screen
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+defaults write com.apple.safari SendDoNotTrackHTTPHeader -int 1
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+defaults write com.apple.Safari WarnAboutFraudulentWebsites -bool true
+defaults write com.apple.Safari WebKitJavaScriptCanOpenWindowsAutomatically -bool false
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically -bool false
+# Display hidden files
+defaults write com.apple.finder "AppleShowAllFiles" -bool "true"
+defaults write com.apple.finder "ShowHardDrivesOnDesktop" -bool "true"
+defaults write com.apple.finder "ShowMountedServersOnDesktop" -bool "true"
+defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool YES
+sudo chflags nohidden /Volumes
+
+display_action "Setup Dock"
+# Enable magnification
+defaults write com.apple.dock magnification -bool true
+# Set minimal icon size
+defaults write com.apple.dock tilesize -int 33
+# Set icon zoom size
+defaults write com.apple.dock largesize -float 39
+# Remove delay before auto hiding
+defaults write com.apple.dock autohide-delay -float 0
+# Set duration of auto hide
+defaults write com.apple.dock autohide-time-modifier -float 0.4
+# Disable recent apps display
+defaults write com.apple.dock "show-recents" -bool "false"
+defaults write com.apple.dock orientation -string 'left'
+defaults write -g AppleMenuBarVisibleInFullscreen -bool false
+
+display_action "Setup energy saving"
+# Enable lid wakeup
+sudo pmset -a lidwake 1
+# Sleep the display after 15 minutes
+sudo pmset -a displaysleep 15
+
+display_action "Setup hosts"
+sudo curl -s "https://someonewhocares.org/hosts/hosts" -o "/etc/hosts"
+sudo killall -HUP mDNSResponder >/dev/null
+killall Finder
+killall Dock

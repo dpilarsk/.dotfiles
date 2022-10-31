@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+{{ template "utils.sh" . }}
+
+display_action "Check system updates"
+sudo softwareupdate -i -a
+
+display_action "Check brew updates"
+brew update
+
+display_action "Check formulae updates"
+brew upgrade
+
+display_action "Check AppStore update"
+mas upgrade

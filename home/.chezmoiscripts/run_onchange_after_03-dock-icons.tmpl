@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+{{ template "utils.sh" . }}
+
+{{- $apps := .os.darwin.dock_icons.apps }}
+{{- $others := .os.darwin.dock_icons.others }}
+
+{{- $appsCount := len (default "" $apps) }}
+{{- $othersCount := len (default "" $others) }}
+
+{{- if eq (add $appsCount $othersCount) 0 }}
+display_bypass_action "No dock preferences set."
+exit
+{{- else }}
+
+display_action "Customizing dock"
+
+{{- $defaultRestart := "--no-restart" }}
+{{- $homeDir := .chezmoi.homeDir }}
+dockutil --remove all {{ $defaultRestart }}  >/dev/null
+
+{{- range $apps }}
+{{-   $path := ""}}
+{{-   if hasPrefix ":" . }}
+{{-     $path = trimPrefix ":" . }}
+{{-   else }}
+{{-     $path = (list "/Applications/" . ".app/" | join "") }}
+{{-     if not (stat $path) }}
+{{-       $path = $path | replace "/Applications/" "/System/Applications/" }}
+{{-     end }}
+{{-   end }}
+{{-   $path = regexReplaceAll "(~|$HOME)" $path $homeDir }}
+{{-   if stat $path }}
+dockutil --add {{ $path | quote }} --section apps {{ $defaultRestart }} >/dev/null
+{{-   else }}
+display_bypass_action "Could not find {{ . | quote }}, ignored"
+{{-   end }}
+{{- end }}
+
+{{- range $index, $data := $others }}
+{{-   $path := "" }}
+{{-   $args := "" }}
+{{-   if kindIs "string" $data }}
+{{-     $path = $data }}
+{{-   else }}
+{{-     $path = .path }}
+{{-     range $k, $v := $data }}
+{{-       if ne $k "path" }}
+{{-         $args = (list $args (list "--" $k | join "") $v | join " ") }}
+{{-       end }}
+{{-     end }}
+{{-   end }}
+{{-   $restart := $defaultRestart }}
+{{-   if eq (add $index 1) $othersCount }}
+{{-     $restart = "--restart" }}
+{{-   end }}
+{{-   $path = regexReplaceAll "(~|$HOME)" $path $homeDir }}
+{{-   if stat $path }}
+dockutil --add {{ $path | quote }} --section others {{ $args }} {{ $restart }}  >/dev/null
+{{-   else }}
+display_bypass_action "others: could not find {{ $path | quote }}"
+{{-   end }}
+{{- end }}
+
+{{- end }}

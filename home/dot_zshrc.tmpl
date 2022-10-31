@@ -1,0 +1,44 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
+
+if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
+  ZSH_TMUX_AUTOSTART='true'
+  # Fig post block. Keep at the bottom of this file.
+  . "$HOME/.fig/shell/zshrc.post.zsh"
+fi
+
+TERM=xterm-256color
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="spaceship"
+
+zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+
+zstyle ':omz:update' frequency 30
+
+plugins=(git docker docker-compose tmux)
+
+source $ZSH/oh-my-zsh.sh
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/opt/spaceship/spaceship.zsh"
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
+
+alias pnx="pnpm nx"
+alias vim="nvim"
+alias vi="nvim"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+export SHADOW_NPM_REGISTRY_TOKEN={{ (onepasswordDetailsFields "Shadow Registry Token" .professional.accounts.op.vault).credential.value | quote}}
+
+alias ffr="filebot -rename --mode interactive -non-strict --lang fr"
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
