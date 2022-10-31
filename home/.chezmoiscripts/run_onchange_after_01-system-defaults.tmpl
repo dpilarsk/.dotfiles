@@ -5,12 +5,12 @@
 display_filename "Setup default system settings"
 
 display_action "Setup languages & localization"
-defaults write -g AppleLocale -string 'en_US'
+defaults write -g AppleLocale -string 'en_FR'
 defaults write -g AppleMetricUnits -bool true
 defaults write -g AppleMeasurementUnits -string 'Centimeters'
 defaults write -g AppleTemperatureUnit -string 'Celsius'
 # Languages and text formats
-defaults write -g AppleLanguages -array 'en' 'fr'
+defaults write -g AppleLanguages -array 'en-FR' 'fr-FR'
 sudo systemsetup -settimezone 'Europe/Paris' >/dev/null
 
 display_action "Setup UI/UX"
