@@ -27,3 +27,6 @@ display_action "Install AppStore apps"
 display_action "Install {{ .name }}"
 mas install {{ .id }}
 {{- end }}
+
+display_action "Link spaceship theme"
+ln -s /opt/homebrew/opt/spaceship/spaceship.zsh ~/.oh-my-zsh/themes/spaceship.zsh-theme
