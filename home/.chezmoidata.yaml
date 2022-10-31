@@ -13,6 +13,8 @@ professional:
 os:
   darwin:
     homebrew:
+      taps:
+        - homebrew/cask-fonts
       formulaes:
         - git
         - git-lfs

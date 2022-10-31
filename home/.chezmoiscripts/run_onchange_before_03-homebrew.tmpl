@@ -4,21 +4,27 @@
 
 display_action "Begin homebrew installs"
 
+display_action "Install taps"
+{- range (.os.darwin.homebrew.taps | uniq) }}
+display_action "Install {{ . }}"
+brew tap {{ . }}
+{{- end }}
+
 display_action "Install formulaes"
-{{- range (.os.darwin.homebrew.formulaes | uniq) }}
-  display_action "Install {{ . }}"
-  brew install {{ . }}
+{- range (.os.darwin.homebrew.formulaes | uniq) }}
+display_action "Install {{ . }}"
+brew install {{ . }}
 {{- end }}
 
 display_action "Install casks"
 {{- range (.os.darwin.homebrew.casks | uniq) }}
-  display_action "Install {{ . }}"
-  brew install --cask {{ . }}
+display_action "Install {{ . }}"
+brew install --cask {{ . }}
 {{- end }}
 
 
 display_action "Install AppStore apps"
 {{- range (.os.darwin.mas | uniq) }}
-  display_action "Install {{ .name }}"
-  mas install {{ .id }}
+display_action "Install {{ .name }}"
+mas install {{ .id }}
 {{- end }}
