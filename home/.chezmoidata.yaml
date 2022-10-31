@@ -92,7 +92,7 @@ os:
           - Calendar
           - Messages
           - Mail
-          - System Settings
+          - "System Settings"
           - Tower
           - Signal
           - iTerm
