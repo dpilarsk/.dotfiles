@@ -71,3 +71,5 @@ defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$HOME/.ite
 defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 # Saves preferences on quit
 defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection 0
+# Add executable permission to tpm (tmux plugin manager)
+chmod +x ~/.tmux/plugins/tpm/tpm

@@ -13,29 +13,3 @@
     type: "archive"
     url: "https://github.com/dracula/vim/archive/master.tar.gz"
     refreshPeriod: "168h"
-
-".tmux/plugins/tmux-cpu":
-    type: "archive"
-    url: "https://github.com/tmux-plugins/tmux-cpu/archive/master.tar.gz"
-    refreshPeriod: "168h"
-    exact: true
-".tmux/plugins/tmux-resurrect":
-    type: "archive"
-    url: "https://github.com/tmux-plugins/tmux-resurrect/archive/master.tar.gz"
-    refreshPeriod: "168h"
-    exact: true
-".tmux/plugins/tmux-sensible":
-    type: "archive"
-    url: "https://github.com/tmux-plugins/tmux-sensible/archive/master.tar.gz"
-    refreshPeriod: "168h"
-    exact: true
-".tmux/plugins/tmux":
-    type: "archive"
-    url: "https://github.com/dracula/tmux/archive/master.tar.gz"
-    refreshPeriod: "168h"
-    exact: true
-".tmux/plugins/tpm":
-    type: "archive"
-    url: "https://github.com/tmux-plugins/tpm/archive/master.tar.gz"
-    refreshPeriod: "168h"
-    exact: true
