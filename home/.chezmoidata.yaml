@@ -94,6 +94,7 @@ os:
           - Messages
           - Mail
           - "System Settings"
+          - "System Preferences"
           - Tower
           - Signal
           - iTerm
@@ -103,5 +104,5 @@ os:
         others:
           - path: ~/Downloads
             display: stack
-            view: list
+            view: grid
             sort: dateadded
