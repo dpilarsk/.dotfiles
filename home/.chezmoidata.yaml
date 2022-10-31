@@ -33,7 +33,7 @@ os:
         - exa
       casks:
         - alfred
-        - carbon-copy-clone
+        - carbon-copy-cloner
         - via
         - vial
         - fig
