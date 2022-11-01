@@ -12,14 +12,24 @@ brew tap {{ . }}
 
 display_action "Install formulaes"
 {{- range (.os.darwin.homebrew.formulaes | uniq) }}
+brew list --formulae {{ . }} &> /dev/null
+if [ $? -ne 0 ]; then
 display_action "Install {{ . }}"
 brew install {{ . }}
+else
+display_action "{{ . }} is already installed"
+fi
 {{- end }}
 
 display_action "Install casks"
 {{- range (.os.darwin.homebrew.casks | uniq) }}
+brew list --casks {{ . }} &> /dev/null
+if [ $? -ne 0 ]; then
 display_action "Install {{ . }}"
 brew install --cask {{ . }}
+else
+display_action "{{ . }} is already installed"
+fi
 {{- end }}
 
 display_action "Install AppStore apps"
