@@ -87,6 +87,8 @@ os:
     mas:
       - name: "1Password for Safari"
         id: 1569813296
+      - name: "Save to Pocket"
+        id: 1477385213
     dock_icons:
         apps:
           - Finder
