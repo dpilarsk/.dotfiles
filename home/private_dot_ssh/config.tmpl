@@ -1,0 +1,9 @@
+Host *
+  IdentityAgent "~/.ssh/op-agent.sock"
+  IdentityFile ~/.ssh/keys/github_rs2048 
+
+Host gallifrey
+  hostname {{ (onepasswordDetailsFields "Gallifrey" .personal.accounts.op.vault).url.value }}
+  user {{ (onepasswordDetailsFields "Gallifrey" .personal.accounts.op.vault).username.value }}
+  port {{ range (onepasswordDetailsFields "Gallifrey" .personal.accounts.op.vault) }}{{ if and (eq .label "port") }}{{- .value -}}{{ end }}{{ end }}
+
