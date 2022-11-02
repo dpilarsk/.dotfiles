@@ -32,6 +32,7 @@ os:
         - zsh-completions
         - exa
         - spaceship
+        - pyenv
       casks:
         - alfred
         - carbon-copy-cloner
