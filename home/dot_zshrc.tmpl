@@ -42,5 +42,7 @@ export SPACESHIP_TIME_SHOW=true
 export SPACESHIP_PROMPT_ORDER=( dir git node deno python venv rust lua docker exec_time async jobs exit_code line_sep char )
 export SPACESHIP_RPROMPT_ORDER=(time)
 
+eval "$(fnm env --use-on-cd)"
+
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
