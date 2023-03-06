@@ -36,6 +36,7 @@ alias cat="bat"
 alias ls="exa"
 
 alias zipFolders='for folder in ./*; do  zip -r "${folder%/}" "${folder%/}"; done'
+alias renameZipToCbz='for file in *.zip; do mv "${file%}" "${file%.zip}.cbz"; done'
 
 export SHADOW_NPM_REGISTRY_TOKEN={{ (onepasswordDetailsFields "Shadow Registry Token" .professional.accounts.op.vault).credential.value | quote}}
 
