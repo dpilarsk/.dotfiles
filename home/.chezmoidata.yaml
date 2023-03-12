@@ -33,6 +33,7 @@ os:
         - exa
         - spaceship
         - pyenv
+        - koekeishiya/formulae/yabai
       casks:
         - alfred
         - carbon-copy-cloner
