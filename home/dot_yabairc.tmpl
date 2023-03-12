@@ -4,11 +4,6 @@ yabai -m config layout bsp
 # set floating windows always on top
 yabai -m config window_topmost on
 
-# change opacity of unfocused windows
-yabai -m config window_opacity on
-yabai -m config active_window_opacity 1.0
-yabai -m config normal_window_opacity 0.9
-
 # allow some apps to float
 yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Shadow*" manage=off
@@ -19,12 +14,6 @@ yabai -m rule --add app="^The Unarchiver" manage=off
 
 # swap windows when use drag and drop
 yabai -m config mouse_drop_action swap
-
-# change colors of focused/normal windows
-# colors format is "0xAARRGGBB"
-yabai -m config window_border on
-yabai -m config active_window_border_color "0xFFFF55EE"
-yabai -m config normal_window_border_color "0xFFFFDFAF"
 
 # set differents gap
 yabai -m config window_gap 5
