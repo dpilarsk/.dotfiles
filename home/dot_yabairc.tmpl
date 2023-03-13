@@ -1,8 +1,8 @@
 # use BSP (Binary Space Partitioning) as layout system
 yabai -m config layout bsp
 
-# set floating windows always on top
-yabai -m config window_topmost on
+# unset floating windows always on top
+yabai -m config window_topmost off
 
 # allow some apps to float
 yabai -m rule --add app="^System Settings$" manage=off
@@ -13,9 +13,15 @@ yabai -m rule --add app="^Activity Monitor" manage=off
 yabai -m rule --add app="^The Unarchiver" manage=off
 yabai -m rule --add app="^Stats$" manage=off
 yabai -m rule --add app="Electron" manage=off
+yabai -m rule --add app="CleanShot X" manage=off
+yabai -m rule --add app="Fig*" manage=off
 
 # swap windows when use drag and drop
 yabai -m config mouse_drop_action swap
 
 # set differents gap
 yabai -m config window_gap 5
+
+# this makes non-resizable windows float by default.
+yabai -m signal --add event=window_created action="yabai -m query --windows --window $YABAI_WINDOW_ID | /usr/local/bin/jq -er '.\"can-resize\" or .\"is-floating\"' || yabai -m window $YABAI_WINDOW_ID --toggle float"
+
