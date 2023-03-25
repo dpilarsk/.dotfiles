@@ -1,0 +1,20 @@
+-- Needs to define mapleader before loading this file
+vim.g.mapleader = " "
+
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+
+-- Move between pages
+vim.keymap.set("n", "<C-f>", "<C-d>zz")
+vim.keymap.set("n", "<C-d>", "<C-u>zz")
+
+-- Allow replacement without removing current buffer
+vim.keymap.set("x", "<leader>p", "\"_dP")
+
+-- Yank in system clipboard
+vim.keymap.set("n", "<leader>y", "\"+y")
+vim.keymap.set("v", "<leader>y", "\"+y")
+
+-- Replace current word by another one
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+
+vim.keymap.set("n", "<leader>cpf", vim.cmd.Neoformat)

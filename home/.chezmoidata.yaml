@@ -34,6 +34,7 @@ os:
         - spaceship
         - pyenv
         - koekeishiya/formulae/yabai
+        - ripgrep
       casks:
         - alfred
         - carbon-copy-cloner

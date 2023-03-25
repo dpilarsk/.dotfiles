@@ -1,6 +1,6 @@
 Host *
   IdentityAgent "~/.ssh/op-agent.sock"
-  IdentityFile ~/.ssh/keys/github_rs2048 
+  IdentityFile ~/.ssh/keys/github_rsa2048 
 
 Host gallifrey
   hostname {{ (onepasswordDetailsFields "Gallifrey" .personal.accounts.op.vault).url.value }}
