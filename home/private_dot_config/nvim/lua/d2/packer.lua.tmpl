@@ -95,5 +95,13 @@ return require('packer').startup(function(use)
       require('bufferline').setup({})
     end,
   }
+  use {
+    'sudormrfbin/cheatsheet.nvim',
 
+    requires = {
+      {'nvim-telescope/telescope.nvim'},
+      {'nvim-lua/popup.nvim'},
+      {'nvim-lua/plenary.nvim'},
+    }
+  }
 end)
