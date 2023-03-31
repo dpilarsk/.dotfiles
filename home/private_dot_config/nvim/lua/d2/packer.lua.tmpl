@@ -28,6 +28,9 @@ return require('packer').startup(function(use)
 
   use('tpope/vim-fugitive')
 
+  use('williamboman/mason.nvim')
+  use('williamboman/mason-lspconfig.nvim')
+
   use {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v1.x',
@@ -51,6 +54,8 @@ return require('packer').startup(function(use)
     }
   }
 
+  use('simrat39/rust-tools.nvim')
+
   use('zbirenbaum/copilot.lua')
 
   use ('sbdchd/neoformat')
@@ -68,5 +73,10 @@ return require('packer').startup(function(use)
   }
 
   use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons' }
+  }
 
 end)
