@@ -79,4 +79,13 @@ return require('packer').startup(function(use)
     requires = { 'nvim-tree/nvim-web-devicons' }
   }
 
+  use {
+    'echasnovski/mini.cursorword',
+    branch = 'stable',
+    config = function()
+      require('mini.cursorword').setup({
+        delay = 200,
+      })
+    end
+  }
 end)
