@@ -1,48 +1,108 @@
-local lsp = require('lsp-zero').preset({
-  name = 'recommended',
-})
+local mason = require('mason')
+local mason_lsp = require('mason-lspconfig')
+local lspconfig = require('lspconfig')
+local rust_tools = require('rust-tools')
+local cmp_ls = require('cmp_nvim_lsp')
+local cmp = require 'cmp'
+local luasnip = require 'luasnip'
 
-lsp.ensure_installed({
-	'tsserver',
-	'eslint',
-	'rust_analyzer',
-})
+local keyset = vim.keymap.set
+local nkeyset = function(key, action, opts) keyset("n", key, action, opts) end
 
-local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
-local cmp_mappings = lsp.defaults.cmp_mappings({
-	['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-	['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-	['<C-y>'] = cmp.mapping.confirm({select = true}),
-	['<C-Space>'] = cmp.mapping.complete(),
-})
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
 
-cmp_mappings['<Tab>'] = nil
+local servers = {
+  "html",
+  "jsonls",
+  "lua_ls",
+  "marksman",
+  "pyright",
+  "tailwindcss",
+  "tsserver",
+  "rust_analyzer",
+  "yamlls"
+}
 
-lsp.setup_nvim_cmp({
-  mapping = cmp_mappings,
-})
+mason.setup()
+mason_lsp.setup({ ensure_installed = servers })
 
-lsp.on_attach(function(client, buf)
-	local opts = {buffer = buf, remap = false}
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = cmp_ls.default_capabilities(capabilities)
 
-	vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-	vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-	vim.keymap.set("n", "<leader>gd", function() vim.diagnostic.open_float() end, opts)
-	vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-	vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
-	vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
-	vim.keymap.set("n", "<leader>crr", function() vim.lsp.buf.references() end, opts)
-	vim.keymap.set("n", "<leader>cre", function() vim.lsp.buf.rename() end, opts)
-	vim.keymap.set("n", "<leader>sh", function() vim.lsp.buf.signature_help() end, opts)
-	vim.keymap.set("n", "<leader>bf", function() vim.lsp.buf.format() end)
-end)
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  }),
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  },
+}
 
--- (Optional) Configure lua language server for neovim
-lsp.nvim_workspace()
+local on_attach = function(_, bufnr)
+  local opts = { buffer = bufnr }
 
-lsp.setup()
+  nkeyset("K", vim.lsp.buf.hover, opts)
+  nkeyset("gd", vim.lsp.buf.definition, opts)
+  nkeyset("gt", vim.lsp.buf.type_definition, opts)
+  nkeyset("gi", vim.lsp.buf.implementation, opts)
+  nkeyset("ge", vim.diagnostic.open_float, opts)
+  nkeyset("<leader>rn", vim.lsp.buf.rename, opts)
+  nkeyset("<leader>dl", ":Telescope diagnostics<CR>", opts)
+  nkeyset("<leader>dn", vim.diagnostic.goto_next, opts)
+  nkeyset("<leader>dp", vim.diagnostic.goto_prev, opts)
+  nkeyset("<leader>ca", vim.lsp.buf.code_action, opts)
+end
+
+
+for _, server in pairs(servers) do
+  if server == "rust_analyzer" then
+    rust_tools.setup({ tools = { on_initialized = on_attach } })
+  else
+    lspconfig[server].setup({ on_attach = on_attach, capabilities = capabilities })
+  end
+end
+
 
 vim.diagnostic.config({
-  virtual_text = true,
+    virtual_text = true,
+    signs = true,
+    update_in_insert = true,
+    underline = true,
+    severity_sort = false,
+    float = {
+        border = 'rounded',
+        source = 'always',
+        header = '',
+        prefix = '',
+    },
 })
