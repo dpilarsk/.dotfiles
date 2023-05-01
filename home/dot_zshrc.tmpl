@@ -3,10 +3,9 @@
 
 setopt share_history
 
-if [ -z "$TMUX" ]
-then
-    tmux attach -t experiments || tmux new -s experiments 
-fi
+export EDITOR="nvim"
+
+eval "$(zellij setup --generate-auto-start zsh)"
 
 if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
   # Fig post block. Keep at the bottom of this file.

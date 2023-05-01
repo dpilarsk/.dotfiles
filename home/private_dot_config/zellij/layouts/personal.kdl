@@ -1,0 +1,20 @@
+layout {
+  tab_template name="project" {
+    pane size=1 borderless=true {
+      plugin location="zellij:tab-bar"
+    }
+    pane split_direction="vertical" size="80%" {
+        pane
+        pane split_direction="horizontal" {
+            pane
+            pane
+            children
+        }
+    }
+    pane size=2 borderless=true {
+      plugin location="zellij:status-bar"
+    }
+  }
+
+  project name="project 1" focus=true
+}
