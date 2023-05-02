@@ -35,6 +35,7 @@ os:
         - pyenv
         - koekeishiya/formulae/yabai
         - ripgrep
+        - zellij
       casks:
         - alfred
         - carbon-copy-cloner
