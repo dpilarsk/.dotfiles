@@ -5,7 +5,7 @@ require("copilot").setup({
   },
 })
 
-vim.keymap.set("i", "<C-G>", function()
+vim.keymap.set("i", "<C-A>", function()
   if require("copilot.suggestion").is_visible() then
     require("copilot.suggestion").accept()
   else
