@@ -5,7 +5,7 @@ setopt share_history
 
 export EDITOR="nvim"
 
-eval "$(zellij setup --generate-auto-start zsh)"
+zellij attach --create
 
 if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
   # Fig post block. Keep at the bottom of this file.
