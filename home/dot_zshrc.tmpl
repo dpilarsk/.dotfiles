@@ -41,6 +41,8 @@ export SHADOW_NPM_REGISTRY_TOKEN={{ (onepasswordDetailsFields "Shadow Registry T
 
 alias ffr="filebot -rename --mode interactive -non-strict --lang fr"
 
+alias gd="git diff --name-only --relative --diff-filter=d | xargs bat --diff"
+
 # Spacehsip configuration
 export SPACESHIP_TIME_SHOW=true
 export SPACESHIP_PROMPT_ORDER=( dir git node deno python venv rust lua docker exec_time async jobs exit_code line_sep char )
