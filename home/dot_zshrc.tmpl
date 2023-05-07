@@ -5,6 +5,8 @@ setopt share_history
 
 export EDITOR="nvim"
 
+eval "$(zoxide init zsh)"
+
 zellij attach --create
 
 if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then

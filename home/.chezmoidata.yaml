@@ -36,6 +36,7 @@ os:
         - koekeishiya/formulae/yabai
         - ripgrep
         - zellij
+        - zoxide
       casks:
         - alfred
         - carbon-copy-cloner
