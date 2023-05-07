@@ -1,6 +1,8 @@
 # Fig pre block. Keep at the top of this file.
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 
+source "$HOME/zsh-autocomplete/zsh-autocomplete-main/zsh-autocomplete.plugin.zsh"
+
 setopt share_history
 
 export EDITOR="nvim"

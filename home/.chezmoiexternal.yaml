@@ -2,3 +2,7 @@
     type: "archive"
     url: "https://github.com/wbthomason/packer.nvim/archive/refs/heads/master.zip"
     refreshPeriod: "168h"
+"zsh-autocomplete":
+    type: "archive"
+    url: "https://github.com/marlonrichert/zsh-autocomplete/archive/refs/heads/main.zip"
+    refreshPeriod: "168h"

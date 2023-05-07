@@ -37,6 +37,7 @@ os:
         - ripgrep
         - zellij
         - zoxide
+        - fzf
       casks:
         - alfred
         - carbon-copy-cloner
