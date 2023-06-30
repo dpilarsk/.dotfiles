@@ -18,6 +18,7 @@ local servers = {
   "marksman",
   "pyright",
   "tailwindcss",
+  "denols",
   "tsserver",
   "rust_analyzer",
   "yamlls"
@@ -71,8 +72,9 @@ cmp.setup {
 local on_attach = function(_, bufnr)
   local opts = { buffer = bufnr }
 
-  require('lsp_signature').on_attach({
+  require('lsp_signature').setup({
     bind = true,
+    floating_window = false,
     handler_opts = {
       border = "rounded"
     }
@@ -88,12 +90,26 @@ local on_attach = function(_, bufnr)
   nkeyset("<leader>dn", vim.diagnostic.goto_next, opts)
   nkeyset("<leader>dp", vim.diagnostic.goto_prev, opts)
   nkeyset("<leader>ca", vim.lsp.buf.code_action, opts)
+  nkeyset("<leader>K", ":lua require('lsp_signature').toggle_float_win()<CR>", opts)
 end
 
 
 for _, server in pairs(servers) do
   if server == "rust_analyzer" then
     rust_tools.setup({ tools = { on_initialized = on_attach } })
+  elseif server == "denols" then
+    lspconfig[server].setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+      root_dir = lspconfig.util.root_pattern("deno.json")
+    })
+  elseif server == "tsserver" then
+    lspconfig[server].setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+      root_dir = lspconfig.util.root_pattern("package.json"),
+      single_file_support = false,
+    })
   else
     lspconfig[server].setup({ on_attach = on_attach, capabilities = capabilities })
   end
