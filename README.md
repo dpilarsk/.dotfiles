@@ -67,3 +67,4 @@ _For full list, see [command overview](https://www.chezmoi.io/user-guide/command
 - Chirag Davé for [plistwatch](https://github.com/catilac/plistwatch)
 - Zachary Cutlip for [prefsniff](https://github.com/zcutlip/prefsniff)
 - Mathias Bynens for his work on [macOS defaults](https://github.com/mathiasbynens/dotfiles/blob/main/.macos)
+- Christopher N. KATOYI for his [neovim lsp init config](https://github.com/Christopher2K/dotfiles/blob/main/.config/nvim/lua/plugins/lsp.lua) working with rust-analyzer
