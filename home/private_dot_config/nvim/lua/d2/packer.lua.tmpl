@@ -37,11 +37,7 @@ return require('packer').startup(function(use)
     "folke/trouble.nvim",
     requires = "nvim-tree/nvim-web-devicons",
     config = function()
-      require("trouble").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
+      require("trouble").setup({})
     end
   }
 
@@ -89,7 +85,6 @@ return require('packer').startup(function(use)
   use('saadparwaiz1/cmp_luasnip')
   use('L3MON4D3/LuaSnip')
   use('simrat39/rust-tools.nvim')
-  use("lukas-reineke/indent-blankline.nvim")
   use({
     "nvim-telescope/telescope-file-browser.nvim",
     requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
@@ -98,7 +93,5 @@ return require('packer').startup(function(use)
   use('j-hui/fidget.nvim')
   use('wakatime/vim-wakatime')
   use('tveskag/nvim-blame-line')
-  use('ray-x/lsp_signature.nvim')
   use({ 'kylechui/nvim-surround', config = function() require('nvim-surround').setup({}) end })
-  use({ 'https://git.sr.ht/~whynothugo/lsp_lines.nvim', config = function() require('lsp_lines').setup({}) end })
 end)
