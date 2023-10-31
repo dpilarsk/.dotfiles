@@ -115,4 +115,12 @@ return require("packer").startup(function(use)
       require("nvim-surround").setup({})
     end
   }
+
+  use {
+    "smoka7/hop.nvim",
+    tag = "*",
+    config = function()
+      require"hop".setup({})
+    end
+  }
 end)
