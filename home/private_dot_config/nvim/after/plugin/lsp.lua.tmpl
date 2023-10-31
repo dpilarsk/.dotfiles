@@ -72,14 +72,6 @@ cmp.setup {
 local on_attach = function(_, bufnr)
   local opts = { buffer = bufnr }
 
-  require('lsp_signature').setup({
-    bind = true,
-    floating_window = false,
-    handler_opts = {
-      border = "rounded"
-    }
-  }, bufnr)
-
   nkeyset("K", vim.lsp.buf.hover, opts)
   nkeyset("gd", vim.lsp.buf.definition, opts)
   nkeyset("gt", vim.lsp.buf.type_definition, opts)
