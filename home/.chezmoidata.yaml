@@ -38,6 +38,7 @@ os:
         - zellij
         - zoxide
         - fzf
+        - font-monaspace
       casks:
         - alfred
         - carbon-copy-cloner
