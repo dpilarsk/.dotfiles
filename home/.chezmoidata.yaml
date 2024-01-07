@@ -45,7 +45,6 @@ os:
         - carbon-copy-cloner
         - via
         - vial
-        - fig
         - netnewswire
         - monitorcontrol
         - rectangle
