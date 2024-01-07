@@ -1,0 +1,38 @@
+return {
+  "nvim-treesitter/nvim-treesitter",
+  commit = "0da349ed303bea955942f409d29059cdb89dbe2c",
+  dependencies = {
+    { "windwp/nvim-ts-autotag", commit = "8515e48a277a2f4947d91004d9aa92c29fdc5e18" },
+  },
+  build = ":TSUpdate",
+  config = function ()
+    require("nvim-treesitter.configs").setup({
+      ensure_installed = {
+        "c",
+	"lua",
+	"vim",
+	"query",
+	"rust",
+	"javascript",
+	"typescript",
+	"python",
+	"yaml",
+	"json"
+      },
+      sync_install = false,
+      auto_install = true,
+      highlight = {
+        enable = true,
+	additional_vim_regex_highlighting = false
+      },
+      rainbow = {
+        enable = true,
+	extended_mode = true,
+	max_file_lines = 1000
+      },
+      autotag = {
+        enable = true
+      },
+    })
+  end
+}

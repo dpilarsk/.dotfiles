@@ -1,0 +1,35 @@
+return {
+  "nvim-lualine/lualine.nvim",
+  commit = "566b7036f717f3d676362742630518a47f132fff",
+  dependencies = {
+    { "nvim-tree/nvim-web-devicons", commit = "db0c864375c198cacc171ff373e76bfce2a85045" }
+  },
+  config = function()
+    require("lualine").setup({
+      options = {
+        icons_enabled = true,
+        theme = "dracula",
+        section_separators = "",
+        component_separators = "",
+      },
+      sections = {
+        lualine_a = { "mode" },
+        lualine_b = { "branch" },
+        lualine_c = { "filename" },
+        lualine_x = { "encoding", "fileformat", "filetype" },
+        lualine_y = { "progress" },
+        lualine_z = { "location" },
+      },
+      inactive_sections = {
+        lualine_a = { "filename" },
+        lualine_b = {},
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {},
+      },
+      tabline = {},
+      extensions = {},
+    })
+  end
+}

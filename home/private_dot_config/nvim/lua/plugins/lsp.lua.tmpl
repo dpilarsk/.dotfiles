@@ -1,0 +1,133 @@
+return {
+  "williamboman/mason.nvim",
+  tag = "v1.9.0",
+  dependencies = {
+    { "neovim/nvim-lspconfig",             tag = "v0.1.7" },
+    { "williamboman/mason-lspconfig.nvim", tag = "v1.26.0" },
+    { "hrsh7th/nvim-cmp",                  commit = "538e37ba87284942c1d76ed38dd497e54e65b891" },
+    { "hrsh7th/cmp-nvim-lsp",              commit = "5af77f54de1b16c34b23cba810150689a3a90312" },
+    { "L3MON4D3/LuaSnip",                  tag = "v2.2.0" },
+    { "mrcjkb/rustaceanvim",               tag = "3.12.2", ft = { "rust" } }
+  },
+  config = function ()
+    local lspconfig = require('lspconfig')
+    local cmp_ls = require('cmp_nvim_lsp')
+    local cmp = require 'cmp'
+    local luasnip = require 'luasnip'
+
+    local keyset = vim.keymap.set
+    local nkeyset = function(key, action, opts) keyset("n", key, action, opts) end
+
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+
+    local servers = {
+      "html",
+      "jsonls",
+      "lua_ls",
+      "marksman",
+      "pyright",
+      "tailwindcss",
+      "denols",
+      "tsserver",
+      "rust_analyzer",
+      "yamlls"
+    }
+
+    require('mason').setup()
+    require('mason-lspconfig').setup({ ensure_installed = servers })
+
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities = cmp_ls.default_capabilities(capabilities)
+
+    cmp.setup {
+      snippet = {
+        expand = function(args)
+          luasnip.lsp_expand(args.body)
+	end,
+      },
+      window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+      },
+      mapping = cmp.mapping.preset.insert({
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+	['<C-f>'] = cmp.mapping.scroll_docs(4),
+	['<C-Space>'] = cmp.mapping.complete(),
+	['<CR>'] = cmp.mapping.confirm { select = true },
+	['<Tab>'] = cmp.mapping(function(fallback)
+	  if cmp.visible() then
+	    cmp.select_next_item()
+	  elseif luasnip.expand_or_jumpable() then
+	    luasnip.expand_or_jump()
+          else
+	    fallback()
+	  end
+	end, { 'i', 's' }),
+	['<S-Tab>'] = cmp.mapping(function(fallback)
+	  if cmp.visible() then
+	    cmp.select_prev_item()
+	  elseif luasnip.jumpable(-1) then
+	    luasnip.jump(-1)
+          else
+	    fallback()
+	  end
+	end, { 'i', 's' }),
+      }),
+      sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "luasnip" }
+      }, {
+        { name = "buffer" }
+      })
+    }
+
+    nkeyset("dp", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
+    nkeyset("dn", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+    nkeyset("<leader>dl", ":Telescope diagnostics<CR>", { desc = "Open diagnostics" })
+
+    local on_attach = function(_, bufnr)
+      local opts = function(description) return { desc = description, buffer = bufnr } end
+
+        nkeyset("K", vim.lsp.buf.hover, opts("Hover"))
+	nkeyset("gd", vim.lsp.buf.definition, opts("Go to definition"))
+	nkeyset("gt", vim.lsp.buf.type_definition, opts("Go to type definition"))
+	nkeyset("gi", vim.lsp.buf.implementation, opts("Go to implementation"))
+	nkeyset("<leader>rn", vim.lsp.buf.rename, opts("Rename in current buffer"))
+	nkeyset("<leader>ca", vim.lsp.buf.code_action, opts("Code action"))
+    end
+
+
+    for _, server in pairs(servers) do
+      if server == "denols" then
+	lspconfig[server].setup({
+	  on_attach = on_attach,
+	  capabilities = capabilities,
+	  root_dir = lspconfig.util.root_pattern("deno.json")
+	})
+      elseif server == "tsserver" then
+        lspconfig[server].setup({
+	  on_attach = on_attach,
+  	  capabilities = capabilities,
+  	  root_dir = lspconfig.util.root_pattern("package.json"),
+  	  single_file_support = false,
+      })
+      else
+        lspconfig[server].setup({ on_attach = on_attach, capabilities = capabilities })
+      end
+    end
+
+    vim.diagnostic.config({
+      virtual_text = false,
+      signs = true,
+      update_in_insert = true,
+      underline = true,
+      severity_sort = false,
+      float = {
+        border = 'rounded',
+        source = 'always',
+        header = '',
+        prefix = '',
+      },
+    })
+  end
+}

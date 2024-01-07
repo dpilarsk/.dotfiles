@@ -1,0 +1,22 @@
+return {
+  "zbirenbaum/copilot.lua",
+  commit = "b03617a6dc4bc88b65ab5deac1631da9a9c2dcaf",
+  config = function ()
+    require("copilot").setup({
+      suggestion = {
+        accept = false,
+	auto_trigger = true
+      }
+    })
+
+    vim.keymap.set("i", "<C-a>", function ()
+      if require("copilot.suggestion").is_visible() then
+        require("copilot.suggestion").accept()
+      else
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
+      end
+    end, {
+      silent = true
+    })
+  end
+}
