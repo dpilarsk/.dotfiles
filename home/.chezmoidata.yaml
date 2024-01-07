@@ -39,6 +39,7 @@ os:
         - zoxide
         - fzf
         - font-monaspace
+        - gnu-sed
       casks:
         - alfred
         - carbon-copy-cloner
@@ -51,7 +52,6 @@ os:
         - cleanshot
         - swish
         - tower
-        - iterm2
         - webstorm
         - jetbrains-toolbox
         - brave-browser
