@@ -27,13 +27,15 @@ require("lazy").setup("plugins")
 local keymaps = require("keymaps")
 keymaps.init()
 
-function setColorScheme()
-  -- Set colorscheme
-  -- Wait until coloscheme support neovim correclty -- color = color or "dracula_pro_buffy" or "dracula"
-  vim.cmd.colorscheme(dracula)
+vim.cmd.colorscheme("catppuccin")
 
-  -- Define background as transparent
-  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-end
-setColorScheme()
+-- function setColorScheme()
+--   -- Set colorscheme
+--   -- Wait until coloscheme support neovim correclty -- color = color or "dracula_pro_buffy" or "dracula"
+--   vim.cmd.colorscheme(dracula)
+--
+--   -- Define background as transparent
+--   vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+--   vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+-- end
+-- setColorScheme()
