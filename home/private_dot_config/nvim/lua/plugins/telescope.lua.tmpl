@@ -3,6 +3,7 @@ return {
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function ()
     local builtin = require("telescope.builtin")
+    local actions = require("telescope.actions")
     require("telescope").setup({
       defaults = {
         layout_config = {
@@ -16,7 +17,12 @@ return {
 	    local cmd = { "head", "-c", max_bytes, filepath }
 	    require("telescope.previewers.utils").job_maker(cmd, bufnr, opts)
 	  end
-	}
+	},
+        mappings = {
+          n = {
+            ["q"] = actions.smart_add_to_qflist
+          },
+        },
       },
       extensions = {
         file_browser = {
