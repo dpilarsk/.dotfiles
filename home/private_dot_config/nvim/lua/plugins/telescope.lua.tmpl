@@ -5,6 +5,10 @@ return {
     local builtin = require("telescope.builtin")
     require("telescope").setup({
       defaults = {
+        layout_config = {
+          bottom_pane = { width = 0.9, height = 0.5 },
+        },
+        layout_strategy = "bottom_pane",
         preview = {
 	  -- Set filesize preview to 10k bytes maximum
 	  filezise_hook = function(filepath, bufnr, opts)
