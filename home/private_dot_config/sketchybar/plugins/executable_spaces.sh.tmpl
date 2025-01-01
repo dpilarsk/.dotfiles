@@ -1,0 +1,111 @@
+#!/bin/bash
+
+echo "Loading spaces plugin"
+
+source "$HOME/.config/sketchybar/colors.sh" # Loads all defined colors
+
+create_workspace_item() {
+  local name="$1"
+  sketchybar --add item "$name" left                         \
+             --set "$name"                                   \
+                   label="$name"                             \
+                   padding_left=7                            \
+                   padding_right=7                           \
+                   icon.color=$COLOR_WHITE                   \
+                   icon.highlight_color=$COLOR_RED           \
+                   label.padding_right=12                    \
+                   label.color=$COLOR_WHITE                  \
+                   label.highlight_color=$COLOR_WHITE        \
+                   label.y_offset=-1                         \
+                   padding_right=1                           \
+                   padding_left=1                            \
+                   background.color=$COLOR_BACKGROUND        \
+                   background.border_width=1                 \
+                   background.height=26                      \
+                   click_script="aerospace workspace $sid"   \
+                   background.border_color=$COLOR_BLACK 
+
+  sketchybar --add bracket "$name"                           \
+             --set "$name"                                   \
+                   background.color=0x00000000               \
+                   background.border_color=$COLOR_BACKGROUND \
+                   background.height=28                      \
+                   background.border_width=2
+
+  sketchybar --add item "space.padding.$name" left   \
+             --set "space.padding.$name"             \
+                   width=10
+}
+
+update_workspace_windows() {
+  local name="$1"
+
+  local windows=$(aerospace list-windows --format "%{app-name}" --workspace "$name")
+  echo "Windows for $name: $windows"
+
+  if [ -z "$windows" ]; then
+    echo "No windows for $name"
+    sketchybar --animate tanh 10   \
+               --set "$name"       \
+                     label="-"
+  else
+    local icon_line=""
+    while IFS= read -r app; do
+      echo "Adding window $app from $windows"
+      icon_line="$icon_line $app"
+    done <<< "$windows"
+    echo "Icon line: $icon_line"
+    sketchybar --animate tanh 10         \
+               --set "$name"             \
+                     label="$icon_line"
+  fi
+}
+
+handle_workspace_change() {
+  local focused_name="$FOCUSED_WORKSPACE"
+  local name="$2"
+
+  if [ "$focused_name" = "$name" ]; then
+    sketchybar --set "$name"                                \
+                     icon.highlight=on                      \
+                     label.highlight=on                     \
+                     background.border_color=$COLOR_BLACK   
+  else
+    sketchybar --set "$name"                                \
+                     icon.highlight=on                      \
+                     label.highlight=on                     \
+                     background.border_color=$COLOR_RED   
+  fi
+}
+
+setup_workspaces() {
+  sketchybar --add event aerospace_workspace_change
+  local item_order=""
+  echo "Setting up workspaces\n"
+  local list=$(aerospace list-workspaces --all)
+  local OIFS="$IFS"
+
+  IFS=$'\n'
+  local workspaces=(${list})
+  IFS="$OIFS"
+
+
+
+  for name in "${workspaces[@]}"; do
+    echo "Creating workspace item for $name"
+    create_workspace_item "$name"
+    item_order="$item_order $name space.padding.$name"
+    echo "Updating workspace windows for $name"
+    update_workspace_windows "$name"
+    echo "Go to next workspace"
+    echo "HEY $1 _ $2 _ $3"
+    sketchybar --subscribe $name aerospace_workspace_change                 \
+               --set $name                                                  \
+                           script="$CONFIG_DIR/plugins/spaces.sh handle_workspace_change $name"
+  done
+
+  item_order="$item_order front_app"
+  sketchybar --reorder $item_order
+}
+
+"$@"
