@@ -94,6 +94,8 @@ os:
         - tunnelblick
         - arc
         - ghostty
+        - sketchybar
+        - aerospace
     mas:
       - name: "1Password for Safari"
         id: 1569813296
