@@ -31,7 +31,7 @@ os:
         - mas
         - zsh
         - zsh-completions
-        - exa
+        - eza
         - spaceship
         - pyenv
         - koekeishiya/formulae/yabai
