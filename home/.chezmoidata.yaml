@@ -15,7 +15,6 @@ os:
     homebrew:
       taps:
         - homebrew/cask-fonts
-        - nikitabobko/tap/aerospace
         - FelixKratz/formulae
       formulaes:
         - git
@@ -95,7 +94,7 @@ os:
         - arc
         - ghostty
         - sketchybar
-        - aerospace
+        - nikitabobko/tap/aerospace
     mas:
       - name: "1Password for Safari"
         id: 1569813296
