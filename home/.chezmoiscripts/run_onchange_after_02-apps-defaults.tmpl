@@ -63,13 +63,3 @@ defaults write com.apple.ImageCapture disableHotPlug -bool true
 display_action "Setup Terminal"
 # Secure Keyboard Entry (see https://security.stackexchange.com/a/47786/8918)
 defaults write com.apple.finder SecureKeyboardEntry -bool true
-
-display_action "Setup iTerm2"
-# Specify the preferences directory
-defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$HOME/.iterm/"
-# Tell iTerm2 to use the custom preferences in the directory
-defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
-# Saves preferences on quit
-defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection 0
-# Add executable permission to tpm (tmux plugin manager)
-chmod +x ~/.tmux/plugins/tpm/tpm
