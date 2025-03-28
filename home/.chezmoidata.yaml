@@ -72,11 +72,9 @@ os:
         - zoom
         - teamviewer
         - the-unarchiver
-        - google-chrome
         - discord
         - 1password
         - 1password-cli
-        - firefox
         - aldente
         - hpedrorodrigues/tools/dockutil
         - mdimagesizemdimporter
@@ -90,7 +88,6 @@ os:
         - ghostty
         - sketchybar
         - nikitabobko/tap/aerospace
-        - arc
     dock_icons:
         apps:
           - Finder
