@@ -96,10 +96,11 @@ os:
         - ghostty
         - sketchybar
         - nikitabobko/tap/aerospace
+        - arc
     dock_icons:
         apps:
           - Finder
-          - Safari
+          - Arc
           - Calendar
           - Messages
           - Mail
