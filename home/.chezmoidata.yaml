@@ -53,7 +53,7 @@ os:
         - cleanshot
         - tower
         - figma
-        - kaleidoscope
+        - kaleidoscope@3
         - microsoft-remote-desktop
         - notion
         - proxyman
