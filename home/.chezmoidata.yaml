@@ -41,6 +41,7 @@ os:
         - fzf
         - font-monaspace
         - gnu-sed
+        - atuin
       casks:
         - alfred
         - carbon-copy-cloner
