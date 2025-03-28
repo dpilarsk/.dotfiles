@@ -31,9 +31,3 @@ else
 display_action "{{ . }} is already installed"
 fi
 {{- end }}
-
-display_action "Install AppStore apps"
-{{- range (.os.darwin.mas | uniq) }}
-display_action "Install {{ .name }}"
-mas install {{ .id }}
-{{- end }}
