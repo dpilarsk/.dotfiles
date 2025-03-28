@@ -108,10 +108,8 @@ os:
           - "System Preferences"
           - Tower
           - Signal
-          - iTerm
+          - Ghostty
           - Slack
-          - Notion
-          - Figma
         others:
           - path: ~/Downloads
             display: stack
