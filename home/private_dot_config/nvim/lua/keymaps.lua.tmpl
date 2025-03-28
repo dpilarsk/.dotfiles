@@ -38,6 +38,8 @@ function keymaps.init()
 
 
   vim.keymap.set("n", "<leader>bd", "<CMD>bd<CR>", { desc = "Close buffer", silent = true })
+
+  vim.keymap.set("n", "<leader>qf", "<CMD>copen<CR>", { desc = "Open quickfix list", silent = true })
 end
 
 return keymaps

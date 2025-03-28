@@ -9,6 +9,7 @@ return {
     { "L3MON4D3/LuaSnip",                  tag = "v2.3.0" },
     { "mrcjkb/rustaceanvim",               tag = "4.24.0", ft = { "rust" } }
   },
+  event = { "BufReadPre", "BufNewFile" },
   config = function ()
     local lspconfig = require('lspconfig')
     local cmp_ls = require('cmp_nvim_lsp')
@@ -109,7 +110,16 @@ return {
 	  on_attach = on_attach,
   	  capabilities = capabilities,
   	  -- root_dir = lspconfig.util.root_pattern("package.json"),
-  	  single_file_support = false,
+  	  single_file_support = true,
+          autostart = true,
+          filetypes = {
+            "javascript",
+            "javascriptreact",
+            "javascript.jsx",
+            "typescript",
+            "typescriptreact",
+            "typescript.tsx",
+          },
       })
       else
         lspconfig[server].setup({ on_attach = on_attach, capabilities = capabilities })
