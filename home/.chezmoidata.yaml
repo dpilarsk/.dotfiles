@@ -58,7 +58,6 @@ os:
         - notion
         - proxyman
         - tableplus
-        - visual-studio-code
         - docker
         - google-cloud-sdk
         - slack
@@ -88,6 +87,7 @@ os:
         - ghostty
         - sketchybar
         - nikitabobko/tap/aerospace
+        - zed
     dock_icons:
         apps:
           - Finder
