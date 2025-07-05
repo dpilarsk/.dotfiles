@@ -33,7 +33,7 @@ return {
   opts = {
     provider = "copilot",
     providers = (function()
-      local api_key = '{{ (onepasswordDetailsFields "OpenRouter" .personal.accounts.op.vault).credential.value }}'
+      local api_key = 'OPENROUTER_API_KEY'
       local providers = {}
       for _, spec in ipairs(provider_specs) do
         local entry = {
