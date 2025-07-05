@@ -1,15 +1,15 @@
 return {
-  "nvim-telescope/telescope.nvim", tag = "0.1.8",
+  "nvim-telescope/telescope.nvim", commit = "a4ed82509cecc56df1c7138920a1aeaf246c0ac5",
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function ()
     local builtin = require("telescope.builtin")
     local actions = require("telescope.actions")
     require("telescope").setup({
       defaults = {
-        layout_config = {
-          bottom_pane = { width = 0.9, height = 0.5 },
-        },
-        layout_strategy = "bottom_pane",
+        -- layout_config = {
+        --   bottom_pane = { width = 0.9, height = 0.5 },
+        -- },
+        -- layout_strategy = "bottom_pane",
         preview = {
 	  -- Set filesize preview to 10k bytes maximum
 	  filezise_hook = function(filepath, bufnr, opts)
@@ -36,33 +36,9 @@ return {
     -- Load extensions
     require("telescope").load_extension("file_browser")
     require("telescope").load_extension("fzf")
-    require("telescope").load_extension("harpoon")
-    local conf = require("telescope.config").values
-    local function toggle_telescope(harpoon_files)
-      local file_paths = {}
-        for _, item in ipairs(harpoon_files.items) do
-	  table.insert(file_paths, item.value)
-	end
-      require("telescope.pickers").new({}, {
-        prompt_title = "Harpoon",
-        finder = require("telescope.finders").new_table({
-          results = file_paths,
-        }),
-        previewer = conf.file_previewer({}),
-        sorter = conf.generic_sorter({}),
-      }):find()
-    end
-
     -- Keymap specific to file_browser
     vim.keymap.set("n", "<leader>fb", ":Telescope file_browser<CR>", { desc = "Open file browser" })
     vim.keymap.set("n", "<leader>pfb", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { desc = "Open file browser at current file" })
-
-    -- Keymap specific to harpoon
-    local harpoon = require("harpoon")
-    harpoon.setup()
-    vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end, { desc = "Append to harpoon list" })
-    vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Toggle harpoon quick menu" })
-    vim.keymap.set("n", "<leader>ph", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon list" })
 
     vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
     vim.keymap.set("n", "<leader>gf", builtin.git_files, { desc = "Find git files" })
