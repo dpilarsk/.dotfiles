@@ -1,22 +1,24 @@
 return {
   "zbirenbaum/copilot.lua",
-  commit = "f7612f5af4a7d7615babf43ab1e67a2d790c13a6",
-  config = function ()
-    require("copilot").setup({
+  cmd = "Copilot",
+  build = ":Copilot auth",
+  event = "BufReadPost",
+  config = function()
+    require("copilot").setup {
       suggestion = {
         accept = false,
-	auto_trigger = true
-      }
-    })
+        auto_trigger = true,
+      },
+    }
 
-    vim.keymap.set("i", "<C-a>", function ()
+    vim.keymap.set("i", "<C-a>", function()
       if require("copilot.suggestion").is_visible() then
         require("copilot.suggestion").accept()
       else
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
       end
     end, {
-      silent = true
+      silent = true,
     })
-  end
+  end,
 }

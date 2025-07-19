@@ -33,15 +33,15 @@ return {
   opts = {
     provider = "copilot",
     providers = (function()
-      local api_key = 'OPENROUTER_API_KEY'
+      local api_key = "OPENROUTER_API_KEY"
       local providers = {}
       for _, spec in ipairs(provider_specs) do
         local entry = {
           model = spec.model,
         }
         if not spec.no_api_key then
-          entry.__inherited_from = 'openai'
-          entry.endpoint = 'https://openrouter.ai/api/v1'
+          entry.__inherited_from = "openai"
+          entry.endpoint = "https://openrouter.ai/api/v1"
           entry.api_key_name = api_key
         end
         providers[spec.name] = entry
@@ -83,7 +83,7 @@ return {
     },
     {
       -- Make sure to set this up properly if you have lazy=true
-      'MeanderingProgrammer/render-markdown.nvim',
+      "MeanderingProgrammer/render-markdown.nvim",
       opts = {
         file_types = { "markdown", "Avante" },
       },

@@ -1,33 +1,19 @@
 return {
-  "catppuccin/nvim",
-  name = "catppuccin",
-  priority = 1000,
-  config = function()
-    require("catppuccin").setup({
-      flavour = "mocha",
+  { -- further customize the options set by the community
+    "catppuccin",
+    opts = {
       integrations = {
+        sandwich = false,
+        noice = true,
+        mini = true,
+        leap = true,
+        markdown = true,
+        neotest = true,
         cmp = true,
-        gitsigns = true,
-        treesitter = true,
-        treesitter_context = true,
-        ts_rainbow = true,
-        mini = {
-          enabled = true,
-          indentscope_color = "",
-        },
-        barbecue = {
-          dim_dirname = true, -- directory name is dimmed by default
-          bold_basename = true,
-          dim_context = false,
-          alt_background = false,
-        },
-        harpoon = false,
-        telescope = {
-          enabled = true
-        },
+        overseer = true,
         lsp_trouble = true,
-        which_key = true
-      }
-    })
-  end
+        rainbow_delimiters = true,
+      },
+    },
+  },
 }

@@ -1,38 +1,15 @@
+if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+
+-- Customize Treesitter
+
+---@type LazySpec
 return {
   "nvim-treesitter/nvim-treesitter",
-  commit = "42fc28ba918343ebfd5565147a42a26580579482",
-  dependencies = {
-    -- { "windwp/nvim-ts-autotag", commit = "a1d526af391f6aebb25a8795cbc05351ed3620b5" },
+  opts = {
+    ensure_installed = {
+      "lua",
+      "vim",
+      -- add more arguments for adding more treesitter parsers
+    },
   },
-  build = ":TSUpdate",
-  config = function ()
-    require("nvim-treesitter.configs").setup({
-      ensure_installed = {
-        "c",
-	"lua",
-	"vim",
-	"query",
-	"rust",
-	"javascript",
-	"typescript",
-	"python",
-	"yaml",
-	"json"
-      },
-      sync_install = false,
-      auto_install = true,
-      highlight = {
-        enable = true,
-	additional_vim_regex_highlighting = false
-      },
-	--      rainbow = {
-	--        enable = true,
-	-- extended_mode = true,
-	-- max_file_lines = 1000
-	--      },
-	--      autotag = {
-	--        enable = false
-	--      },
-    })
-  end
 }
