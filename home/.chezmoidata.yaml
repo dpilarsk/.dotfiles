@@ -34,7 +34,6 @@ os:
         - eza
         - spaceship
         - pyenv
-        - koekeishiya/formulae/yabai
         - ripgrep
         - zellij
         - zoxide
@@ -89,20 +88,20 @@ os:
         - nikitabobko/tap/aerospace
         - zed
     dock_icons:
-        apps:
-          - Finder
-          - Arc
-          - Calendar
-          - Messages
-          - Mail
-          - "System Settings"
-          - "System Preferences"
-          - Tower
-          - Signal
-          - Ghostty
-          - Slack
-        others:
-          - path: ~/Downloads
-            display: stack
-            view: grid
-            sort: dateadded
+      apps:
+        - Finder
+        - Arc
+        - Calendar
+        - Messages
+        - Mail
+        - "System Settings"
+        - "System Preferences"
+        - Tower
+        - Signal
+        - Ghostty
+        - Slack
+      others:
+        - path: ~/Downloads
+          display: stack
+          view: grid
+          sort: dateadded
