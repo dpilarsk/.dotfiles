@@ -1,0 +1,56 @@
+return {
+  "folke/snacks.nvim",
+  ---@type snacks.Config
+  opts = {
+    picker = {
+      formatters = {
+        file = {
+          filename_first = true,
+        },
+      },
+      actions = {
+        smart_enter = function(picker)
+          if not picker then return end
+          local item = picker:current()
+          -- Non-file item: delegate to the picker's source-specific confirm
+          if not item or (not item.buf and not item.file) then
+            picker:action("confirm")
+            return
+          end
+          -- File item: avoid vsplit when source window is codecompanion
+          local main_win = picker.main
+          if main_win and vim.api.nvim_win_is_valid(main_win) then
+            local ft = vim.bo[vim.api.nvim_win_get_buf(main_win)].filetype
+            if ft:match("codecompanion") then
+              Snacks.picker.actions.jump(picker, nil, { cmd = "edit" })
+              return
+            end
+          end
+          local buffers = vim.fn.getbufinfo({ buflisted = 1 })
+          local open_buffers = vim.tbl_filter(function(buf)
+            return buf.name ~= ""
+          end, buffers)
+          if #open_buffers == 0 then
+            Snacks.picker.actions.jump(picker, nil, { cmd = "edit" })
+          else
+            Snacks.picker.actions.jump(picker, nil, { cmd = "vsplit" })
+          end
+        end,
+      },
+      win = {
+        input = {
+          keys = {
+            ["<CR>"] = { "smart_enter", mode = { "n", "i" } },
+            ["<C-CR>"] = { "confirm", mode = { "i" } },
+          },
+        },
+        list = {
+          keys = {
+            ["<CR>"] = { "smart_enter", mode = { "n" } },
+          },
+        },
+      },
+    },
+  },
+}
+
